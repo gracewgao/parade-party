@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Parade from "./components/Parade";
 import { SPRITES } from "./components/Character";
 import { createGlobalStyle } from "styled-components";
-import socketIOClient from "socket.io-client";
+import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
 
 const GlobalStyle = createGlobalStyle`
@@ -21,7 +21,10 @@ export interface IParadeUpdate {
 }
 
 function App() {
-  const socket = socketIOClient("http://localhost:3001", {
+  const roomId = "123";
+
+  const socket = io(`http://localhost:3001`, {
+    path: "/parade/",
     transports: ["websocket"],
   });
 

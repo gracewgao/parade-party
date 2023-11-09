@@ -62,7 +62,7 @@ function Parade(props: IParade) {
   `;
 
   const ParadeAnimation = styled.div`
-    animation: ${animation} ${sceneWidth / 150}s linear infinite;
+    animation: ${animation} ${sceneWidth / 100}s linear infinite;
     bottom: 0px;
     position: absolute;
   `;

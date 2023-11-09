@@ -11,32 +11,30 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server, Socket } = require("socket.io");
-const io = require("socket.io")(server, {
+const io = new Server(server, {
+  path: "/parade/",
   cors: {
     origin: "http://localhost:3000",
     methods: ["GET", "POST"],
   },
 });
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST"],
+//   },
+// });
 
 app.use(cors());
 
-/*
-// client connects -> update state
-  client emits (server screen size)
-  (server send new total screen)
-  server emits ("update", {timeStamp: X, parade: [{id: X, screenSize: X}...]})
-  client on ("update", () => {calculate pos w timestamp, update screen index})
-
-// server detects disconnect -> update state
-  server pops array
-  server emits update
-*/
 interface User {
   id: string;
   screenSize: number;
   spriteId: number;
 }
 let connectedUsers: User[] = [];
+
+const roomId = "123";
 
 const updateClients = () => {
   io.emit("update", {
@@ -46,7 +44,6 @@ const updateClients = () => {
 };
 
 io.on("connection", (socket: typeof Socket) => {
-
   // when a user connects or resized window
   socket.on("userUpdate", (user: User) => {
     let isNew = true;

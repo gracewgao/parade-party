@@ -21,14 +21,22 @@ var app = express();
 var http = require("http");
 var server = http.createServer(app);
 var _a = require("socket.io"), Server = _a.Server, Socket = _a.Socket;
-var io = require("socket.io")(server, {
+var io = new Server(server, {
+    path: "/parade/",
     cors: {
         origin: "http://localhost:3000",
         methods: ["GET", "POST"],
     },
 });
+// const io = require("socket.io")(server, {
+//   cors: {
+//     origin: "http://localhost:3000",
+//     methods: ["GET", "POST"],
+//   },
+// });
 app.use(cors());
 var connectedUsers = [];
+var roomId = "123";
 var updateClients = function () {
     io.emit("update", {
         timestamp: new Date().getTime(),

@@ -13,12 +13,13 @@ var express = require("express");
 var app = express();
 var http = require("http");
 var server = http.createServer(app);
+require("dotenv").config();
 var uuid = require("uuid");
 var _a = require("socket.io"), Server = _a.Server, Socket = _a.Socket;
 var io = new Server(server, {
     path: "/parade/",
     cors: {
-        origin: "http://localhost:3000",
+        origin: process.env.APP_URL,
         methods: ["GET", "POST"],
     },
 });

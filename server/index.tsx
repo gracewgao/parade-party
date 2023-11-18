@@ -1,15 +1,8 @@
-// import express from 'express';
-// import http from 'http';
-// import { Server, Socket } from 'socket.io';
-
-// const app = express();
-// const server = http.createServer();
-// const io = new Server(server);
-const cors = require("cors");
 const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
+const uuid = require("uuid");
 const { Server, Socket } = require("socket.io");
 const io = new Server(server, {
   path: "/parade/",
@@ -18,53 +11,76 @@ const io = new Server(server, {
     methods: ["GET", "POST"],
   },
 });
-// const io = require("socket.io")(server, {
-//   cors: {
-//     origin: "http://localhost:3000",
-//     methods: ["GET", "POST"],
-//   },
-// });
-
+const cors = require("cors");
 app.use(cors());
 
+// same interface as client
 interface User {
   id: string;
   screenSize: number;
   spriteId: number;
 }
-let connectedUsers: User[] = [];
 
-const roomId = "123";
+const socketMap = new Map<string, User[]>();
 
-const updateClients = () => {
-  io.emit("update", {
+const updateClients = (paradeId: string) => {
+  io.to(paradeId).emit("update", {
     timestamp: new Date().getTime(),
-    clients: connectedUsers,
+    clients: socketMap.get(paradeId),
   });
 };
 
 io.on("connection", (socket: typeof Socket) => {
-  // when a user connects or resized window
-  socket.on("userUpdate", (user: User) => {
-    let isNew = true;
-    connectedUsers.forEach((it) => {
-      if (it.id == user.id) {
-        isNew = false;
-        it.screenSize = user.screenSize;
-      }
-    });
-    if (isNew) {
-      connectedUsers.push({ ...user });
-    }
-    updateClients();
+  socket.on("newParade", () => {
+    const paradeId = uuid.v4().slice(0, 8);
+    socket.join(paradeId);
+    socketMap.set(paradeId, []);
+    socket.emit("paradeCreate", paradeId);
+    // socket.to(paradeId).emit("paradeCreate", paradeId);
+    console.log("new parade created " + paradeId);
   });
 
-  socket.on("userDisconnect", (userId: string) => {
+  socket.on("join", (paradeId: string) => {
+    socket.join(paradeId);
+    console.log("joined " + paradeId);
+  });
+
+  // when a user connects or resized window
+  socket.on("userUpdate", (paradeId: string, user: User) => {
+    console.log("update: " + paradeId + " " + user.id);
+    if (!socketMap.has(paradeId)) {
+      // invalid id
+      socket.to(paradeId).emit("invalidId");
+    } else {
+      let isNew = true;
+      let connectedUsers = socketMap.get(paradeId) ?? [];
+      connectedUsers.forEach((it: User) => {
+        if (it.id == user.id) {
+          isNew = false;
+          it.screenSize = user.screenSize;
+        }
+      });
+      if (isNew) {
+        connectedUsers.push({ ...user });
+      }
+      socketMap.set(paradeId, connectedUsers);
+      updateClients(paradeId);
+    }
+  });
+
+  socket.on("userDisconnect", (paradeId: string, userId: string) => {
+    console.log("disconnected: " + paradeId + " " + userId);
+    let connectedUsers = socketMap.get(paradeId) ?? [];
     const disconnectedUserIndex = connectedUsers.findIndex(
       (user) => user.id == userId
     );
     connectedUsers.splice(disconnectedUserIndex, 1);
-    updateClients();
+    if (connectedUsers.length == 0) {
+      socketMap.delete(paradeId);
+    } else {
+      socketMap.set(paradeId, connectedUsers);
+    }
+    updateClients(paradeId);
   });
 });
 

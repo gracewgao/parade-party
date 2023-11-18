@@ -1,4 +1,4 @@
-import React, { ReactNode, useState } from "react";
+import { useState } from "react";
 import styled from "styled-components";
 import Spacer from "./Spacer";
 
@@ -20,7 +20,7 @@ const ToggleTitle = styled.button`
 const Arrow = styled.p<{ isOpen: boolean }>`
   margin: 0;
   display: inline-block;
-  transform: rotate(${(props) => (props.isOpen ? "0" : "90")}deg);
+  transform: rotate(${(props) => (props.isOpen ? "90" : "0")}deg);
 `;
 
 const ToggleContainer = styled.div`

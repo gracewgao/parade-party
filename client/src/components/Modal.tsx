@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 interface IModal {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: ReactNode;
 }
 
@@ -53,7 +53,9 @@ function Modal(props: IModal) {
   return props.isOpen ? (
     <ModalOverlay>
       <ModalFrame>
-        <ModalClose onClick={props.onClose}>{"[X]"}</ModalClose>
+        {props.onClose ? (
+          <ModalClose onClick={props.onClose}>{"[X]"}</ModalClose>
+        ) : null}
         <ModalContent>{props.children}</ModalContent>
       </ModalFrame>
     </ModalOverlay>

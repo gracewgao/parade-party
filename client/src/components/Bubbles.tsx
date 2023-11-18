@@ -9,6 +9,8 @@ import Toggle from "./Toggle";
 
 interface IBubbles {
   index: number;
+  isNumberModalOpen: boolean;
+  setIsNumberModalOpen: (boolean) => void;
 }
 
 const ParadeLeft = styled.div`
@@ -53,42 +55,57 @@ const ParadeNumber = styled.p`
   color: black;
 `;
 
-// const ModalTitle = styled.h3`
-//     font-weight: 400;
-// `
-
 function Bubbles(props: IBubbles) {
-  const [isNumberModalOpen, setIsNumberModalOpen] = useState(false);
   const [isHeartModalOpen, setIsHeartModalOpen] = useState(false);
+
+  const shareUrl = window.location.href;
 
   return (
     <ParadeLeft>
-      <ParadeNumberBubble onClick={() => setIsNumberModalOpen(true)}>
+      <ParadeNumberBubble onClick={() => props.setIsNumberModalOpen(true)}>
         <Spacer height={4} />
         <ParadeNumber>{props.index}</ParadeNumber>
       </ParadeNumberBubble>
       <Spacer height={8} />
       <ParadeHeartBubble onClick={() => setIsHeartModalOpen(true)} />
       <Modal
-        isOpen={isNumberModalOpen}
-        onClose={() => setIsNumberModalOpen(false)}
+        isOpen={props.isNumberModalOpen}
+        onClose={() => props.setIsNumberModalOpen(false)}
       >
-        <p>welcome to the party!</p>
+        <p>welcome to the party :^)</p>
         <p>
-          to invite your friends, share this link:{" "}
-          <a href="https://localhost:3000/">https://localhost:3000/</a>
+          we're so glad you could make it! you are number #{props.index} in the
+          parade.
         </p>
         <p>
-          to watch the parade, gather 'round and put your devices side-by-side
-          according to the order in the top left corner.
+          to watch with other paraders, gather 'round and align your devices
+          side-by-side according to your number.
+        </p>
+        <p>
+          recruit more friends using: <a href={shareUrl}>{shareUrl}</a>
+        </p>
+        <p>
+          you can revisit this guide anytime from the top-left bubble. happy
+          marching!
         </p>
       </Modal>
       <Modal
         isOpen={isHeartModalOpen}
         onClose={() => setIsHeartModalOpen(false)}
       >
-        <p>about parade party</p>
-        <p>this site was made with react.js, socket.io</p>
+        <p>about this project</p>
+        <p>
+          parade party is brought to you by a silly hackathon concept and many
+          great ideas from my friend kailey.
+        </p>
+        <p>
+          this site was built with react.js, node.js, socket.io, and lots of
+          love!
+        </p>
+        <p>
+          <a href="https://github.com/gracewgao/parade-party">parade-party</a>{" "}
+          was created by <a href="https://gracewgao.me/">gracewgao</a>{" "}
+        </p>
         <Toggle title="art credits">
           <ul>
             <li>
@@ -107,11 +124,6 @@ function Bubbles(props: IBubbles) {
               </a>
               )
             </li>
-          </ul>
-        </Toggle>
-        <Toggle title="want to contribute?">
-          <ul>
-            <li>this is the github link</li>
           </ul>
         </Toggle>
       </Modal>

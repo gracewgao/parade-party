@@ -1,15 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 
 import SceneGif from "../assets/scene.gif";
 import styled, { keyframes } from "styled-components";
 import Character, { PARADER_WIDTH } from "./Character";
-import { IParadeUpdate, IUser } from "../App";
 import Spacer from "./Spacer";
 import Bubbles from "./Bubbles";
 
 interface IParade {
   update: IParadeUpdate;
   id: string;
+}
+
+interface IUser {
+  id: string;
+  screenSize: number;
+  spriteId: number;
+}
+
+interface IParadeUpdate {
+  timestamp: number;
+  clients: IUser[];
 }
 
 const ParadeContainer = styled.div`
@@ -67,9 +77,15 @@ function Parade(props: IParade) {
     position: absolute;
   `;
 
+  const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
+
   return (
     <ParadeScene>
-      <Bubbles index={index} />
+      <Bubbles
+        index={index}
+        isNumberModalOpen={isNumberModalOpen}
+        setIsNumberModalOpen={setIsNumberModalOpen}
+      />
       <ParadeAnimation>
         <ParadeContainer>
           {update.clients.map((c: IUser) => (

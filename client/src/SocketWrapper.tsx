@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Parade from "./components/Parade";
 import { SPRITES } from "./components/Character";
-import { createGlobalStyle } from "styled-components";
 import { io } from "socket.io-client";
 import { v4 as uuidv4 } from "uuid";
-import { useParams, useNavigate, redirect } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 export interface IUser {
   id: string;
@@ -21,7 +20,9 @@ function SocketWrapper() {
   const { pId } = useParams();
   const navigate = useNavigate();
 
-  const socket = io(`http://localhost:3001`, {
+  console.log(process.env.REACT_APP_SERVER_URL);
+
+  const socket = io(process.env.REACT_APP_SERVER_URL, {
     path: "/parade/",
     transports: ["websocket"],
   });

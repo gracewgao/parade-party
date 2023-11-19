@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-
 require("dotenv").config();
 const uuid = require("uuid");
 const { Server, Socket } = require("socket.io");

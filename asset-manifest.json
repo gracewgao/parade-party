@@ -1,0 +1,21 @@
+{
+  "files": {
+    "main.css": "/parade-party/static/css/main.e6c13ad2.css",
+    "main.js": "/parade-party/static/js/main.86811eb9.js",
+    "static/js/787.ae662b46.chunk.js": "/parade-party/static/js/787.ae662b46.chunk.js",
+    "static/media/scene.gif": "/parade-party/static/media/scene.eb52a673242fbb918d14.gif",
+    "static/media/richard.png": "/parade-party/static/media/richard.713cf2fa9f6c032ed025.png",
+    "static/media/harrison.png": "/parade-party/static/media/harrison.be5065fe178055855ec3.png",
+    "static/media/kailey.png": "/parade-party/static/media/kailey.7c285e0996616a3d0635.png",
+    "static/media/grace.png": "/parade-party/static/media/grace.b3ed6d12bafe2280920b.png",
+    "static/media/sophie.png": "/parade-party/static/media/sophie.b93136c539bcc8adbe77.png",
+    "index.html": "/parade-party/index.html",
+    "main.e6c13ad2.css.map": "/parade-party/static/css/main.e6c13ad2.css.map",
+    "main.86811eb9.js.map": "/parade-party/static/js/main.86811eb9.js.map",
+    "787.ae662b46.chunk.js.map": "/parade-party/static/js/787.ae662b46.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.86811eb9.js"
+  ]
+}

@@ -77,14 +77,14 @@ function Parade(props: IParade) {
     position: absolute;
   `;
 
-  const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
+  // const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
 
   return (
     <ParadeScene>
       <Bubbles
         index={index}
-        isNumberModalOpen={isNumberModalOpen}
-        setIsNumberModalOpen={setIsNumberModalOpen}
+        // isNumberModalOpen={isNumberModalOpen}
+        // setIsNumberModalOpen={setIsNumberModalOpen}
       />
       <ParadeAnimation>
         <ParadeContainer>

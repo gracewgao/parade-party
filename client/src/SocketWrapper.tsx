@@ -22,9 +22,17 @@ function SocketWrapper() {
 
   console.log(process.env.REACT_APP_SERVER_URL);
 
+  // const socket = io(process.env.REACT_APP_SERVER_URL, {
+  //   path: "/parade/",
+  //   transports: ["websocket"],
+  // });
+
   const socket = io(process.env.REACT_APP_SERVER_URL, {
-    path: "/parade/",
     transports: ["websocket"],
+    path: "/parade/",
+    forceNew: true,
+    reconnectionAttempts: 3,
+    timeout: 2000,
   });
 
   const [paradeId, setParadeId] = useState(pId);

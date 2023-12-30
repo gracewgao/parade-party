@@ -9,8 +9,8 @@ import Toggle from "./Toggle";
 
 interface IBubbles {
   index: number;
-  isNumberModalOpen: boolean;
-  setIsNumberModalOpen: (boolean) => void;
+  // isNumberModalOpen: boolean;
+  // setIsNumberModalOpen: (boolean) => void;
 }
 
 const ParadeLeft = styled.div`
@@ -57,20 +57,21 @@ const ParadeNumber = styled.p`
 
 function Bubbles(props: IBubbles) {
   const [isHeartModalOpen, setIsHeartModalOpen] = useState(false);
+  const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
 
   const shareUrl = window.location.href;
 
   return (
     <ParadeLeft>
-      <ParadeNumberBubble onClick={() => props.setIsNumberModalOpen(true)}>
+      <ParadeNumberBubble onClick={() => setIsNumberModalOpen(true)}>
         <Spacer height={4} />
         <ParadeNumber>{props.index}</ParadeNumber>
       </ParadeNumberBubble>
       <Spacer height={8} />
       <ParadeHeartBubble onClick={() => setIsHeartModalOpen(true)} />
       <Modal
-        isOpen={props.isNumberModalOpen}
-        onClose={() => props.setIsNumberModalOpen(false)}
+        isOpen={isNumberModalOpen}
+        onClose={() => setIsNumberModalOpen(false)}
       >
         <p>welcome to the party :^)</p>
         <p>

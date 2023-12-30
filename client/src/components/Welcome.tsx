@@ -13,7 +13,7 @@ const ParadeScene = styled.div`
 `;
 
 function Parade() {
-  const createUrl = "parade/new";
+  const createUrl = `${process.env.PUBLIC_URL}/#/parade/new`;
 
   return (
     <ParadeScene>

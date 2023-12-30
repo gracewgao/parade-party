@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 import SocketWrapper from "./SocketWrapper";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { Route, Routes, HashRouter } from "react-router-dom";
 import Welcome from "./components/Welcome";
 
 const GlobalStyle = createGlobalStyle`
@@ -10,13 +10,14 @@ const GlobalStyle = createGlobalStyle`
 function App() {
   return (
     <>
-      <Router>
+      {/* <HashRouter basename={process.env.PUBLIC_URL}> */}
+      <HashRouter>
         <GlobalStyle />
         <Routes>
           <Route path="/parade/:pId" element={<SocketWrapper />} />
           <Route path="/" element={<Welcome />} />
         </Routes>
-      </Router>
+      </HashRouter>
     </>
   );
 }

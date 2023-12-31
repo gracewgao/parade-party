@@ -22,11 +22,6 @@ function SocketWrapper() {
 
   console.log(process.env.REACT_APP_SERVER_URL);
 
-  // const socket = io(process.env.REACT_APP_SERVER_URL, {
-  //   path: "/parade/",
-  //   transports: ["websocket"],
-  // });
-
   const socket = io(process.env.REACT_APP_SERVER_URL, {
     transports: ["websocket"],
     path: "/parade/",
@@ -35,6 +30,7 @@ function SocketWrapper() {
     timeout: 2000,
   });
 
+  const [showWelcome, setShowWelcome] = useState(true);
   const [paradeId, setParadeId] = useState(pId);
   const [userId, setUserId] = useState(uuidv4());
   const [parade, setParade] = useState<IParadeUpdate>({
@@ -102,7 +98,7 @@ function SocketWrapper() {
     };
   }, []);
 
-  return <Parade update={parade} id={userId} />;
+  return <Parade update={parade} id={userId} showWelcome={showWelcome} setShowWelcome={setShowWelcome} />;
 }
 
 export default SocketWrapper;

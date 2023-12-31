@@ -9,8 +9,8 @@ import Toggle from "./Toggle";
 
 interface IBubbles {
   index: number;
-  // isNumberModalOpen: boolean;
-  // setIsNumberModalOpen: (boolean) => void;
+  showWelcome: boolean;
+  setShowWelcome: (boolean) => void;
 }
 
 const ParadeLeft = styled.div`
@@ -57,7 +57,7 @@ const ParadeNumber = styled.p`
 
 function Bubbles(props: IBubbles) {
   const [isHeartModalOpen, setIsHeartModalOpen] = useState(false);
-  const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
+  const [isNumberModalOpen, setIsNumberModalOpen] = useState(props.showWelcome);
 
   const shareUrl = window.location.href;
 
@@ -71,7 +71,10 @@ function Bubbles(props: IBubbles) {
       <ParadeHeartBubble onClick={() => setIsHeartModalOpen(true)} />
       <Modal
         isOpen={isNumberModalOpen}
-        onClose={() => setIsNumberModalOpen(false)}
+        onClose={() => {
+          setIsNumberModalOpen(false)
+          props.setShowWelcome(false);
+        }}
       >
         <p>welcome to the party :^)</p>
         <p>
@@ -96,18 +99,16 @@ function Bubbles(props: IBubbles) {
       >
         <p>about this project</p>
         <p>
-          parade party is brought to you by a silly hackathon concept and many
-          great ideas from my friend kailey.
+          parade party is a silly hackathon concept inspired by my friend kailey.
         </p>
         <p>
-          this site was built with react.js, node.js, socket.io, and lots of
-          love!
+          this site was built with react.js, node.js & socket.io; see it on <a href="https://github.com/gracewgao/parade-party">github</a>.
         </p>
         <p>
-          <a href="https://github.com/gracewgao/parade-party">parade-party</a>{" "}
-          was created by <a href="https://gracewgao.me/">gracewgao</a>{" "}
+          enjoy the parade,<br/>
+          - <a href="https://gracewgao.me/">grace</a>{" "}
         </p>
-        <Toggle title="art credits">
+        <Toggle title="see art credits">
           <ul>
             <li>
               character sprites from{" "}

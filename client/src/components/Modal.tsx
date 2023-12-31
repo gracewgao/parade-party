@@ -8,7 +8,7 @@ interface IModal {
 }
 
 const ModalOverlay = styled.div`
-  height: 100vh;
+  height: 100%;
   width: 100vw;
   background-color: rgba(0, 0, 0, 0.6);
   position: fixed;

@@ -9,6 +9,8 @@ import Bubbles from "./Bubbles";
 interface IParade {
   update: IParadeUpdate;
   id: string;
+  showWelcome: boolean;
+  setShowWelcome: (boolean) => void;
 }
 
 interface IUser {
@@ -65,7 +67,7 @@ function Parade(props: IParade) {
         rgba(237, 227, 213, 0.6)
       ),
       url(${SceneGif}) left -${sceneLeft}px bottom;
-    height: 100vh;
+    height: 100%;
     width: ${curWidth}px;
     position: fixed;
     overflow: hidden;
@@ -77,14 +79,12 @@ function Parade(props: IParade) {
     position: absolute;
   `;
 
-  // const [isNumberModalOpen, setIsNumberModalOpen] = useState(true);
-
   return (
     <ParadeScene>
       <Bubbles
         index={index}
-        // isNumberModalOpen={isNumberModalOpen}
-        // setIsNumberModalOpen={setIsNumberModalOpen}
+        showWelcome={props.showWelcome}
+        setShowWelcome={props.setShowWelcome}
       />
       <ParadeAnimation>
         <ParadeContainer>

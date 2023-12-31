@@ -6,7 +6,7 @@ import Modal from "./Modal";
 const ParadeScene = styled.div`
   background: linear-gradient(rgba(229, 250, 252, 0), rgba(237, 227, 213, 0.6)),
     url(${SceneGif}) left bottom;
-  height: 100vh;
+  height: 100%;
   width: 100%;
   position: fixed;
   overflow: hidden;

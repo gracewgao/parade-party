@@ -105,7 +105,7 @@ function Bubbles(props: IBubbles) {
           this site was built with react.js, node.js & socket.io; see it on <a href="https://github.com/gracewgao/parade-party">github</a>.
         </p>
         <p>
-          enjoy the parade,<br/>
+          enjoy the parade!<br/>
           - <a href="https://gracewgao.me/">grace</a>{" "}
         </p>
         <Toggle title="see art credits">

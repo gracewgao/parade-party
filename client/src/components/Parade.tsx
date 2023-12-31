@@ -1,16 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import SceneGif from "../assets/scene.gif";
 import styled, { keyframes } from "styled-components";
 import Character, { PARADER_WIDTH } from "./Character";
 import Spacer from "./Spacer";
 import Bubbles from "./Bubbles";
+import Modal from "./Modal";
 
 interface IParade {
   update: IParadeUpdate;
   id: string;
   showWelcome: boolean;
   setShowWelcome: (boolean) => void;
+  isSocketLoading: boolean;
 }
 
 interface IUser {
@@ -38,8 +40,15 @@ function Parade(props: IParade) {
   const numParaders = update.clients.length;
   const paradeWidth = PARADER_WIDTH * numParaders;
 
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    console.log("setting isloading", props.isSocketLoading);
+    setIsLoading(props.isSocketLoading);
+  }, [props.isSocketLoading]);
+
   let sceneWidth = 0;
-  let curWidth = 0;
+  let curWidth = window.innerWidth;
   let sceneLeft = 0;
 
   let index = 0;
@@ -81,22 +90,29 @@ function Parade(props: IParade) {
 
   return (
     <ParadeScene>
-      <Bubbles
-        index={index}
-        showWelcome={props.showWelcome}
-        setShowWelcome={props.setShowWelcome}
-      />
-      <ParadeAnimation>
-        <ParadeContainer>
-          {update.clients.map((c: IUser) => (
-            <Character spriteId={c.spriteId} />
-          ))}
-          <Spacer width={sceneWidth - paradeWidth} />
-          {update.clients.map((c: IUser) => (
-            <Character spriteId={c.spriteId} />
-          ))}
-        </ParadeContainer>
-      </ParadeAnimation>
+      {isLoading ?
+        <Modal isOpen>
+          <p>joining the parade...</p>
+        </Modal> :
+        <>
+          <Bubbles
+            index={index}
+            showWelcome={props.showWelcome}
+            setShowWelcome={props.setShowWelcome}
+          />
+          <ParadeAnimation>
+            <ParadeContainer>
+              {update.clients.map((c: IUser) => (
+                <Character spriteId={c.spriteId} />
+              ))}
+              <Spacer width={sceneWidth - paradeWidth} />
+              {update.clients.map((c: IUser) => (
+                <Character spriteId={c.spriteId} />
+              ))}
+            </ParadeContainer>
+          </ParadeAnimation>
+        </>
+      }
     </ParadeScene>
   );
 }

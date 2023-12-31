@@ -12,23 +12,20 @@ const ParadeScene = styled.div`
   overflow: hidden;
 `;
 
-function Welcome() {
-  const createUrl = `${process.env.PUBLIC_URL}/#/parade/new`;
-
+function NotFound() {
   return (
     <ParadeScene>
       <Modal isOpen>
-        <p>hey there!</p>
+        <p>whoops!</p>
         <p>
-          you've found parade party -- a virtual space to march in a
-          never-ending parade.
+          there's no parade here. it might help to double-check you have the right link.
         </p>
         <p>
-          <a href={createUrl}>start a party</a>
+          <a href={process.env.PUBLIC_URL}>march back home</a>
         </p>
       </Modal>
     </ParadeScene>
   );
 }
 
-export default Welcome;
+export default NotFound;

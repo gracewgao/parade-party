@@ -31,6 +31,7 @@ function SocketWrapper() {
   });
 
   const [showWelcome, setShowWelcome] = useState(true);
+  const [isSocketLoading, setIsSocketLoading] = useState(true);
   const [paradeId, setParadeId] = useState(pId);
   const [userId, setUserId] = useState(uuidv4());
   const [parade, setParade] = useState<IParadeUpdate>({
@@ -40,6 +41,7 @@ function SocketWrapper() {
 
   useEffect(() => {
     function onConnect() {
+      setIsSocketLoading(true);
       if (paradeId == "new") {
         console.log("creating new parade...");
         socket.emit("newParade");
@@ -70,6 +72,7 @@ function SocketWrapper() {
     }
 
     function onUpdate(paradeUpdate: IParadeUpdate) {
+      setIsSocketLoading(false);
       setParade(paradeUpdate);
     }
 
@@ -98,7 +101,12 @@ function SocketWrapper() {
     };
   }, []);
 
-  return <Parade update={parade} id={userId} showWelcome={showWelcome} setShowWelcome={setShowWelcome} />;
+  return <Parade
+    update={parade}
+    id={userId}
+    showWelcome={showWelcome}
+    setShowWelcome={setShowWelcome}
+    isSocketLoading={isSocketLoading} />;
 }
 
 export default SocketWrapper;

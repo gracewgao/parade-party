@@ -50,7 +50,7 @@ io.on("connection", function (socket) {
         console.log("update: " + paradeId + " " + user.id);
         if (!socketMap.has(paradeId)) {
             // invalid id
-            socket.to(paradeId).emit("invalidId");
+            socket.emit("invalidId");
         }
         else {
             var isNew_1 = true;

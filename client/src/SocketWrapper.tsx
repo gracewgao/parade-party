@@ -20,8 +20,6 @@ function SocketWrapper() {
   const { pId } = useParams();
   const navigate = useNavigate();
 
-  console.log(process.env.REACT_APP_SERVER_URL);
-
   const socket = io(process.env.REACT_APP_SERVER_URL, {
     transports: ["websocket"],
     path: "/parade/",
@@ -77,14 +75,16 @@ function SocketWrapper() {
     }
 
     function onInvalid() {
-      console.log("this url does not exist");
+      setIsSocketLoading(false);
+      navigate(`/404`);
+      window.location.reload();
     }
 
     socket.on("disconnect", onDisconnect);
     socket.on("connect", onConnect);
     socket.on("update", onUpdate);
     socket.on("paradeCreate", onParadeCreate);
-    socket.on("invalid", onInvalid);
+    socket.on("invalidId", onInvalid);
 
     // disconnect on refresh
     window.addEventListener("beforeunload", onDisconnect);

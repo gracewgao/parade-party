@@ -43,7 +43,6 @@ function Parade(props: IParade) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    console.log("setting isloading", props.isSocketLoading);
     setIsLoading(props.isSocketLoading);
   }, [props.isSocketLoading]);
 

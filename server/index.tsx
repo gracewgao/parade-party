@@ -51,7 +51,7 @@ io.on("connection", (socket: typeof Socket) => {
     console.log("update: " + paradeId + " " + user.id);
     if (!socketMap.has(paradeId)) {
       // invalid id
-      socket.to(paradeId).emit("invalidId");
+      socket.emit("invalidId");
     } else {
       let isNew = true;
       let connectedUsers = socketMap.get(paradeId) ?? [];

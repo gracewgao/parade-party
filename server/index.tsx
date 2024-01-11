@@ -2,9 +2,10 @@ const express = require("express");
 const app = express();
 const http = require("http");
 const server = http.createServer(app);
-require("dotenv").config();
-const uuid = require("uuid");
+const { generateSlug } = require("random-word-slugs");
 const { Server, Socket } = require("socket.io");
+require("dotenv").config();
+
 const io = new Server(server, {
   path: "/parade/",
   cors: {
@@ -33,11 +34,10 @@ const updateClients = (paradeId: string) => {
 
 io.on("connection", (socket: typeof Socket) => {
   socket.on("newParade", () => {
-    const paradeId = uuid.v4().slice(0, 8);
+    const paradeId = generateSlug();
     socket.join(paradeId);
     socketMap.set(paradeId, []);
     socket.emit("paradeCreate", paradeId);
-    // socket.to(paradeId).emit("paradeCreate", paradeId);
     console.log("new parade created " + paradeId);
   });
 

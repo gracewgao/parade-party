@@ -13,9 +13,9 @@ var express = require("express");
 var app = express();
 var http = require("http");
 var server = http.createServer(app);
-require("dotenv").config();
-var uuid = require("uuid");
+var generateSlug = require("random-word-slugs").generateSlug;
 var _a = require("socket.io"), Server = _a.Server, Socket = _a.Socket;
+require("dotenv").config();
 var io = new Server(server, {
     path: "/parade/",
     cors: {
@@ -34,11 +34,10 @@ var updateClients = function (paradeId) {
 };
 io.on("connection", function (socket) {
     socket.on("newParade", function () {
-        var paradeId = uuid.v4().slice(0, 8);
+        var paradeId = generateSlug();
         socket.join(paradeId);
         socketMap.set(paradeId, []);
         socket.emit("paradeCreate", paradeId);
-        // socket.to(paradeId).emit("paradeCreate", paradeId);
         console.log("new parade created " + paradeId);
     });
     socket.on("join", function (paradeId) {
